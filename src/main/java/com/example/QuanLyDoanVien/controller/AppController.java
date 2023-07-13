@@ -245,7 +245,7 @@ public class AppController {
         DoanVien doanVien = new DoanVien();
         tenChiDoan = chiDoanService.getChiDoanById(id).getTenChiDoan();
         idLop = id;
-
+        System.out.println(idLop);
         if(errMaDoanVien != 0){
             System.out.println("Trùng mã");
             model.addAttribute("errMaDoanVien", "Mã đoàn viên đã tồn tại");
@@ -289,20 +289,36 @@ public class AppController {
         doanVien.setReMatKhau(encodedPassword);
         doanVien.setIdChiDoan(idLop);
         doanVien.setTenChiDoan(chiDoanService.getChiDoanById(idLop).getTenChiDoan());
-        User user = new User();
-
+        
         if(doanVien.getChucVu().equalsIgnoreCase("Đoàn viên")){
             doanVien.setRole(Role.DOANVIEN);
-            user.setRole(Role.DOANVIEN);
         }else{
             doanVien.setRole(Role.CANBO);
-            user.setRole(Role.CANBO);
         }
+
+        User user = new User();
+
+        DoanVien dv = doanVienRepository.getDoanVienByChucVu(doanVien.getChucVu(), idLop);
+        System.out.println(dv == null);
+        if(dv != null){
+            dv.setChucVu("Đoàn viên");
+            dv.setRole(Role.DOANVIEN);
+            User newUser = userRepository.findByEmail(dv.getEmail());
+            newUser.setRole(Role.DOANVIEN);
+        }
+
+        String fullName = doanVien.getHoTen();
+        String[] nameSplited = fullName.split(" ");
+        String firstName = nameSplited[0];
+        String lastName = fullName.substring(firstName.length()+1).trim();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
 
         user.setEmail(doanVien.getEmail());
         user.setPassword(doanVien.getMatKhau());
-        userRepository.save(user);
+        user.setRole(doanVien.getRole());
 
+        userRepository.save(user);
         doanVienService.saveDoanVien(doanVien);
 
         return "redirect:/admin/danh-sach-chi-doan";
@@ -527,7 +543,6 @@ public class AppController {
         String encodedPassword = passwordEncoder.encode(doanVien.getMatKhau());
         doanVien.setMatKhau(encodedPassword);
         doanVien.setReMatKhau(encodedPassword);
-        // doanVien.setTenChiDoan(doanVienService.getDoanVienById(idCanBo).getTenChiDoan());
         doanVien.setIdChiDoan(idChiDoan);
         doanVien.setTenChiDoan(chiDoanService.getChiDoanById(idChiDoan).getTenChiDoan());
 
@@ -538,13 +553,35 @@ public class AppController {
         }
 
         User user = new User();
+
+        // Tìm xem đoàn viên ứng với chức vụ đó đã tồn tại trong lớp chưa
+        DoanVien dv = doanVienRepository.getDoanVienByChucVu(doanVien.getChucVu(), idChiDoan);
+        System.out.println(dv.getHoTen());
+        if(dv != null){
+            dv.setChucVu("Đoàn viên");
+            dv.setRole(Role.DOANVIEN);
+            User newUser = userRepository.findByEmail(dv.getEmail());
+            newUser.setRole(Role.DOANVIEN);
+        }
+
+        // Tách họ tên và lưu vào User
+        String fullName = doanVien.getHoTen();
+        String[] nameSplited = fullName.split(" ");
+        String firstName = nameSplited[0];
+        String lastName = fullName.substring(firstName.length()+1).trim();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        // Tạo tài khoản vào User
         user.setEmail(doanVien.getEmail());
         user.setPassword(doanVien.getMatKhau());
         user.setRole(doanVien.getRole());
 
         userRepository.save(user);
-
         doanVienService.saveDoanVien(doanVien);
+        
+        if(dv.getId() == idDangNhap){
+            return "redirect:/login";
+        }
 
         return "redirect:/can-bo/danh-sach-doan-vien";
     }
