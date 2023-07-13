@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <title>Quản lý đoàn viên</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark" ,
+    style="position:fixed; top: 0; left: 0; right: 0; z-index: 1">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">Admin</a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link px-3" th:href="@{/users}">Quản lý thông tin</a>
+        </li>
+        <li class=" nav-item">
+          <a class="nav-link px-3" th:href="@{/admin/danh-sach-chi-doan}">Danh sách chi đoàn</a>
+        </li>
+        <li class=" nav-item">
+          <a class="nav-link px-3" th:href="@{/admin/logout}">Đăng xuất</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <br>
+  <br>
+
+  <div class="container justify-content-center mt-5" style="position: relative">
+    <div class="row justify-content-center">
+      <h1 style="color: #343A40">Chỉnh sửa chi đoàn</h1>
+    </div>
+
+    <hr style="background-color: #343A40; height: 1px; width: 70%;">
+
+    <br>
+
+    <form th:action="@{/admin/danh-sach-chi-doan/{id}(id=${chidoan.id})}" th:object="${chidoan}" method="post">
+      <div class="row justify-content-center" style="font-size: large">
+        <div class="col text-center">
+          <div class="form-group row">
+            <div class="col">
+              <label class="mr-5">Tên chi đoàn:</label>
+            </div>
+            <div class="col">
+              <input type="text" name="tenChiDoan" th:field="*{tenChiDoan}" placeholder="Nhập tên chi đoàn" required>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <br>
+      <br>
+
+      <div class="box-footer text-center">
+        <button type="submit" class="btn"
+          style="background-color: #343A40; color: white; font-size: large; border-radius: 20px; width: 15%;">
+          Xác nhận
+        </button>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>

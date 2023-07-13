@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Quản lý đoàn viên</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+    
+    .bg {
+      /* The image used */
+      background-image: url(https://storage.googleapis.com/hust-files/2021-11-15/5807675312963584/background-new-page_.9m.jpeg);
+      position: absolute;
+      background-size: cover;
+      background-position-y: center;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 800px;
+      z-index: -1;
+    }
+    </style>
+</head>
+<body>
+<div align="center">
+  <h2>Đăng nhập</h2>
+  <h4><a th:href="@{/admin/login}">Admin</a></h4>
+  <h4><a th:href="@{/can-bo/login}">Cán bộ</a></h4>
+  <h4><a th:href="@{/doan-vien/login}">Đoàn viên</a></h4>
+</div>
+</body>
+</html>

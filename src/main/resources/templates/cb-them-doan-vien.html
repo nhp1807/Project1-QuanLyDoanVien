@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý đoàn viên</title>
+  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+  <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+<br>
+<br>
+
+<div class="container justify-content-center mt-5" style="position: relative">
+  <div class="row justify-content-center">
+    <h1 style="color: #343A40">Thêm đoàn viên</h1>
+  </div>
+
+  <hr style="background-color: #343A40; height: 1px; width: 70%;">
+
+  <br>
+
+  <form th:action="@{/can-bo/danh-sach-doan-vien}" th:object="${doanvien}" method="post">
+    <div class="row justify-content-center" style="font-size: large">
+      <div class="col text-center">
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Mã đoàn viên:</label>
+          </div>
+          <div class="col" style="position: relative;">
+            <input type="text" name="maDoanVien" th:field="*{maDoanVien}" placeholder="Nhập mã đoàn viên" required>
+            <label th:text="${errMaDoanVien}" style="position: absolute; top: 9%; right: -2%; color: red; font-size: 17px"></label>  
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Họ tên:</label>
+          </div>
+          <div class="col">
+            <input type="text"name="hoTen" th:field="*{hoTen}" placeholder="Nhập họ tên" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Chức vụ:</label>
+          </div>
+          <div class="col">
+            <!-- <input type="text"name="chucVu" th:field="*{chucVu}" placeholder="Nhập chức vụ" required> -->
+            <select name="chucVu" th:field="*{chucVu}" placeholder="Chọn chức vụ" style="width: 211.2px; height: 32.2px; color: grey;">
+              <option value="">Chọn chức vụ</option>
+              <option value="Lớp trưởng">Lớp trưởng</option>
+              <option value="Bí thư">Bí thư</option>
+              <option value="Uỷ viên">Uỷ viên</option>
+              <option value="Đoàn viên">Đoàn viên</option>
+          </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Email:</label>
+          </div>
+          <div class="col" style="position: relative;">
+            <input type="text"name="email" th:field="*{email}" placeholder="email@sis.hust.edu.vn" required>
+            <label th:text="${errEmail}" style="position: absolute; top: 9%; right: 10%; color: red; font-size: 17px"></label>  
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Mật khẩu:</label>
+          </div>
+          <div class="col">
+            <input type="password"name="matKhau" th:field="*{matKhau}" placeholder="Nhập mật khẩu" required>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="box-footer text-center">
+      <button type="submit" class="btn"
+              style="background-color: #343A40; color: white; font-size: large; border-radius: 20px; width: 15%;">
+        Xác nhận
+      </button>
+    </div>
+  </form>
+</div>
+</body>
+
+</html>

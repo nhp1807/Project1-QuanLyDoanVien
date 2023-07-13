@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý đoàn viên</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script type="text/javascript" th:src="@{/js/login.js}"></script>
+</head>
+<body>
+<div class="container mt-5" style="postion: relative; width: 60%">
+  <br>
+  <br>
+  <br>
+  <div class="row mt-5">
+    <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card mt-5">
+      <h1 class="text-center mt-3">Đăng nhập</h1>
+      <div class="card-body">
+        <form th:action="@{/can-bo/login}" method="post">
+          <div class="alert alert-danger text-center" th:if="${param.error}">Tên đăng nhập hoặc mật khẩu không đúng</div>
+          <div class="form-group">
+            <label>Tên đăng nhập</label>
+            <input class="form-control" type="text" name="email" placeholder="Nhập tên đăng nhập" required>
+          </div>
+          <br>
+          <div class="form-group">
+            <label>Mật khẩu</label>
+            <input class="form-control" type="password" name="password" placeholder="Nhập mật khẩu" required>
+          </div>
+          <br>
+          <div class="box-footer text-center">
+            <button type="submit" class="btn btn-primary">
+              Xác nhận
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

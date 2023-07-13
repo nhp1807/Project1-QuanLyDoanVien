@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý đoàn viên</title>
+  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+  <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark" ,
+  style="position:fixed; top: 0; left: 0; right: 0; z-index: 1">
+<!-- Brand -->
+<a class="navbar-brand" href="#" >Chi đoàn <a class="navbar-brand" href="#" th:text="${tenChiDoan}"></a></a>
+<!-- Toggler/collapsibe Button -->
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+ <span class="navbar-toggler-icon"></span>
+</button>
+
+<!-- Navbar links -->
+<div class="collapse navbar-collapse" id="collapsibleNavbar" th:object="${doanvien}">
+    <ul class="navbar-nav">
+      </li>
+        <a class="nav-link px-3" th:href="@{/can-bo/thong-tin-doan-vien/chinh-sua/{id}(id=${doanvien.id})}">Quản lý thông tin</a>
+      </li>
+      <li class=" nav-item">
+        <a class="nav-link px-3" th:href="@{/can-bo/danh-sach-doan-vien}">Danh sách đoàn viên</a>
+      </li>
+      <li class=" nav-item">
+        <a class="nav-link px-3" th:href="@{/can-bo/logout}">Đăng xuất</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<br>
+<br>
+
+<div class="container justify-content-center mt-5" style="position: relative">
+  <div class="row justify-content-center">
+    <h1 style="color: #343A40">Đánh giá đoàn viên</h1>
+  </div>
+
+  <hr style="background-color: #343A40; height: 1px; width: 70%;">
+
+  <br>
+
+  <form th:action="@{/can-bo/danh-gia-doan-vien}" th:object="${danhgia}" method="post">
+    <div class="row justify-content-center" style="font-size: large">
+      <div class="col text-center">
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Năm học:</label>
+          </div>
+          <div class="col">
+            <input type="text" name="namHoc" th:field="*{namHoc}" placeholder="Nhập năm học">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row justify-content-center" style="font-size: large;">
+      <div class="form-group row">
+        <div class="col">
+          <label for="" style="font-style: italic;">Nội dung: </label>
+        </div>
+        <div class="col">
+          <textarea name="noiDung" th:field="*{noiDung}" id="" cols="50" rows="6"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="box-footer text-center">
+      <button type="submit" class="btn"
+              style="background-color: #343A40; color: white; font-size: large; border-radius: 20px; width: 15%;">
+        Xác nhận
+      </button>
+    </div>
+  </form>
+</div>
+</body>
+
+</html>

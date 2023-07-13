@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý đoàn viên</title>
+  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+  <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark" ,
+     style="position:fixed; top: 0; left: 0; right: 0; z-index: 1">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#" >Chi đoàn <a class="navbar-brand" href="#" th:text="${tenChiDoan}"></a></a>
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar" th:object="${doanvien}">
+    <ul class="navbar-nav">
+      </li>
+        <a class="nav-link px-3" th:href="@{/can-bo/thong-tin-doan-vien/chinh-sua/{id}(id=${doanvien.id})}">Quản lý thông tin</a>
+      </li>
+      <li class=" nav-item">
+        <a class="nav-link px-3" th:href="@{/can-bo/danh-sach-doan-vien}">Danh sách đoàn viên</a>
+      </li>
+      <li class=" nav-item">
+        <a class="nav-link px-3" th:href="@{/can-bo/doi-mat-khau}">Đổi mật khẩu</a>
+      </li>
+      <li class=" nav-item">
+        <a class="nav-link px-3" th:href="@{/can-bo/logout}">Đăng xuất</a>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <form th:action="@{/can-bo/danh-sach-doan-vien}" th:object="${doanvien}">
+        <input type="text" name="keyword" placeholder="Nhập tên đoàn viên">
+        <input type="submit" value="Tìm kiếm">
+    </form>
+  </div>
+</nav>
+
+<br><br>
+
+<div class="text-center mt-5 mr-5 ml-5" style="position: relative">
+  <div>
+    <h1>Danh sách đoàn viên</h1>
+  </div>
+
+  <div class="row justify-content-center" style="margin: 10px 0">
+    <div>
+      <a th:href="@{/can-bo/danh-sach-doan-vien/them-doan-vien}" class="btn btn-primary btn-sm mb-2 mt-3 justify-content-center" style="color:white; font-size: 20px">Thêm đoàn viên</a>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th class="text-center align-middle">Mã đoàn viên</th>
+        <th class="text-center align-middle">Họ tên</th>
+        <th class="text-center align-middle">CCCD</th>
+        <th class="text-center align-middle">Quê quán</th>
+        <th class="text-center align-middle">Dân tộc</th>
+        <th class="text-center align-middle">Ngày sinh</th>
+        <th class="text-center align-middle">SĐT</th>
+        <th class="text-center align-middle">Chức vụ</th>
+        <th class="text-center align-middle">Ngày vào đoàn</th>
+        <th class="text-center align-middle">Email</th>
+        <th class="text-center align-middle">Chức năng</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="doanVien: ${listDoanViens}">
+        <td class="text-center align-middle" th:text="${doanVien.maDoanVien}"></td>
+        <td class="text-center align-middle" th:text="${doanVien.hoTen}"></td>
+        <td class="text-center align-middle" th:text="${doanVien.cccd}"></td>
+        <td class="text-center align-middle" th:text="${doanVien.queQuan}"></td>
+        <td class="text-center align-middle" th:text="${doanVien.danToc}"></td>
+        <td class="text-center align-middle" th:text="${doanVien.ngaySinh}"></td>
+        <td class="text-center align-middle" th:text="${doanVien.sdt}"></td>
+        <td class="text-center align-middle" th:text="${doanVien.chucVu}"></td>
+        <td class="text-center align-middle" th:text="${doanVien.ngayVaoDoan}"></td>
+        <td class="text-center align-middle" th:text="${doanVien.email}"></td>
+        <td class="text-center align-middle">
+          <a th:href="@{/can-bo/danh-sach-doan-vien/xoa/{id}(id=${doanVien.id})}" class="btn btn-danger" style="color:white">Xoá</a>
+          <a th:href="@{/can-bo/danh-sach-doan-vien/danh-gia/{id}(id=${doanVien.id})}" class="btn btn-primary" style="color:white">Đánh giá</a>
+          <a th:href="@{/can-bo/doan-vien/chinh-sua/{id}(id=${doanVien.id})}" class="btn btn-secondary" style="color:white">Chỉnh sửa</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

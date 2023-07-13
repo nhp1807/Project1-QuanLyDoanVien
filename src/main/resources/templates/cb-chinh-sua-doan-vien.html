@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <title>Quản lý đoàn viên</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark" ,
+     style="position:fixed; top: 0; left: 0; right: 0; z-index: 1">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#" >Chi đoàn <a class="navbar-brand" href="#" th:text="${tenChiDoan}"></a></a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar" th:object="${doanvien}">
+    <ul class="navbar-nav">
+      </li>
+        <a class="nav-link px-3" th:href="@{/can-bo/thong-tin-doan-vien/chinh-sua/{id}(id=${doanvien.id})}">Quản lý thông tin</a>
+      </li>
+      <li class=" nav-item">
+        <a class="nav-link px-3" th:href="@{/can-bo/danh-sach-doan-vien}">Danh sách đoàn viên</a>
+      </li>
+      <li class=" nav-item">
+        <a class="nav-link px-3" th:href="@{/can-bo/doi-mat-khau}">Đổi mật khẩu</a>
+      </li>
+      <li class=" nav-item">
+        <a class="nav-link px-3" th:href="@{/can-bo/logout}">Đăng xuất</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<br>
+<br>
+
+<div class="container justify-content-center mt-5" style="position: relative">
+  <div class="row justify-content-center">
+    <h1 style="color: #343A40">Thông tin đoàn viên</h1>
+  </div>
+
+  <hr style="background-color: #343A40; height: 1px; width: 70%;">
+
+  <br>
+
+  <form th:action="@{/can-bo/thong-tin-doan-vien/{id}(id=${doanvien.id})}" th:object="${doanvien}" method="post">
+    <div class="row" style="font-size: large">
+      <div class="col">
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Mã đoàn viên:</label>
+          </div>
+          <div class="col">
+            <input type="text" name="maDoanVien" th:field="*{maDoanVien}" placeholder="Nhập mã đoàn viên" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Họ tên:</label>
+          </div>
+          <div class="col">
+            <input type="text" name="hoTen" th:field="*{hoTen}" placeholder="Nhập họ tên">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">CCCD:</label>
+          </div>
+          <div class="col">
+            <input type="text" name="cccd" th:field="*{cccd}" placeholder="Nhập CCCD" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Quê quán:</label>
+          </div>
+          <div class="col">
+            <input type="text" name="queQuan" th:field="*{queQuan}" placeholder="Nhập quê quán" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Dân tộc:</label>
+          </div>
+          <div class="col">
+            <input type="text" name="danToc" th:field="*{danToc}" placeholder="Nhập dân tộc" readonly="readonly">
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Tên chi đoàn:</label>
+          </div>
+          <div class="col">
+            <input type="text" name="tenChiDoan" th:field="*{tenChiDoan}" placeholder="Nhập tên chi đoàn">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Ngày sinh:</label>
+          </div>
+          <div class="col">
+            <input type="text" name="ngaySinh" th:field="*{ngaySinh}" placeholder="dd/MM/yyyy"  readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Số điện thoại:</label>
+          </div>
+          <div class="col">
+            <input type="text" name="sdt" th:field="*{sdt}" placeholder="Nhập số điện thoại" readonly="readonly">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Chức vụ:</label>
+          </div>
+          <div class="col">
+            <!-- <input type="text" name="chucVu" th:field="*{chucVu}" placeholder="Nhập chức vụ"> -->
+            <select name="chucVu" th:field="*{chucVu}" placeholder="Chọn chức vụ" style="width: 211.2px; height: 32.2px;">
+              <option value="">Chọn chức vụ</option>
+              <option value="Lớp trưởng">Lớp trưởng</option>
+              <option value="Bí thư">Bí thư</option>
+              <option value="Uỷ viên">Uỷ viên</option>
+              <option value="Đoàn viên">Đoàn viên</option>
+          </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Ngày vào đoàn:</label>
+          </div>
+          <div class="col">
+            <input type="text" name="ngayVaoDoan" th:field="*{ngayVaoDoan}" placeholder="dd/MM/yyyy" readonly="readonly">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr style="background-color: #343A40; height: 0.5px; width: 70%;">
+    <br>
+
+    <!-- <div class="row justify-content-center" style="font-size: large;">
+      <div class="col">
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Email:</label>
+          </div>
+          <div class="col">
+            <input type="text" name="email" th:field="*{email}" placeholder="email@sis.hust.edu.vn" readonly="readonly">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <div class="col">
+            <label class="mr-5">Mật khẩu:</label>
+          </div>
+          <div class="col">
+            <input type="password" name="matKhau" th:field="*{matKhau}" placeholder="Nhập mật khẩu">
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <br>
+    <br>
+
+    <div class="box-footer text-center">
+      <button type="submit" class="btn" style="background-color: #343A40; color: white; font-size: large; border-radius: 20px; width: 15%;">
+        Xác nhận
+      </button>
+    </div>
+  </form>
+</div>
+</body>
+
+</html>
