@@ -16,6 +16,9 @@ public interface DoanVienRepository extends JpaRepository<DoanVien, Long> {
     @Query("SELECT dv FROM DoanVien dv WHERE dv.chucVu = ?1 AND dv.idChiDoan = ?2")
     DoanVien getDoanVienByChucVu(String chucVu, Long idChiDoan);
 
+    @Query("SELECT dv FROM DoanVien dv WHERE dv.chucVu = ?1 AND dv.tenChiDoan = ?2")
+    DoanVien getDoanVienByChucVuWithTenChiDoan(String chucVu, String tenChiDoan);
+
     @Query("SELECT dv FROM DoanVien dv WHERE dv.email = ?1")
     public DoanVien findByEmail(String email);
 

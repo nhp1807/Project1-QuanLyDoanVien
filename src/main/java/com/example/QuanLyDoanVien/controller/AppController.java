@@ -212,15 +212,16 @@ public class AppController {
      */
     @PostMapping("/admin/danh-sach-chi-doan/{id}")
     public String updateChiDoan(@PathVariable Long id, @ModelAttribute("chidoan") ChiDoan chiDoan, Model model) {
-        // tenChiDoan = chiDoanService.getChiDoanById(id).getTenChiDoan();
-        // List<DoanVien> doanViens = doanVienRepository.getListDoanVien(tenChiDoan);
-        // for (DoanVien dv : doanViens) {
-        //     dv.setTenChiDoan(chiDoan.getTenChiDoan());
-        // }
-
         if(!chiDoanService.ifChiDoanExisted(chiDoan.getTenChiDoan())){
             count++;
             return "redirect:/admin/danh-sach-chi-doan/chinh-sua/{id}";
+        }
+
+        tenChiDoan = chiDoanService.getChiDoanById(id).getTenChiDoan();
+        Long idChiDoan = chiDoanService.getChiDoanById(id).getId();
+        List<DoanVien> doanViens = doanVienRepository.getListDoanVien(idChiDoan);
+        for (DoanVien dv : doanViens) {
+            dv.setTenChiDoan(chiDoan.getTenChiDoan());
         }
 
         ChiDoan existingChiDoan = chiDoanService.getChiDoanById(id);
@@ -358,7 +359,7 @@ public class AppController {
     // ---------------------------------------CÁN BỘ-----------------------------------------------
 
     /*
-     * Hiển thị giao diện chỉnh sửa thông tin đoàn viên
+     * Hiển thị giao diện chỉnh sửa thông tin cá nhân
      */
     @GetMapping("/can-bo/thong-tin-doan-vien/chinh-sua/{id}")
     public String updateDoanVienForm(@PathVariable Long id, Model model) {
@@ -375,7 +376,7 @@ public class AppController {
     public String updateDoanVienForm1(@PathVariable Long id, Model model) {
         model.addAttribute("doanvien", doanVienService.getDoanVienById(id));
         model.addAttribute("tenChiDoan", chiDoanService.getChiDoanById(doanVienService.getDoanVienById(id).getIdChiDoan()).getTenChiDoan());
-        System.out.println(idDangNhap);
+        // System.out.println(idDangNhap);
 
         return "cb-chinh-sua-doan-vien";
     }
@@ -388,7 +389,9 @@ public class AppController {
         DoanVien existingDoanVien = doanVienService.getDoanVienById(id);
         User user = userRepository.findByEmail(existingDoanVien.getEmail());
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        // existingDoanVien.setTenChiDoan(doanVien.getTenChiDoan());
+        // if(chiDoanService.ifChiDoanExisted(doanVien.getTenChiDoan()) == false){
+        //     return "redirect:/can-bo/doan-vien/chinh-sua/" + id;
+        // }
         existingDoanVien.setIdChiDoan(chiDoanRepository.findByTenChiDoanContaining(doanVien.getTenChiDoan()).get(0).getId());
         // existingDoanVien.setIdChiDoan(existingDoanVien.getIdChiDoan());
         existingDoanVien.setTenChiDoan(doanVien.getTenChiDoan());
@@ -569,7 +572,6 @@ public class AppController {
 
         // Tìm xem đoàn viên ứng với chức vụ đó đã tồn tại trong lớp chưa
         DoanVien dv = doanVienRepository.getDoanVienByChucVu(doanVien.getChucVu(), idChiDoan);
-        System.out.println(dv.getHoTen());
         if(dv != null){
             dv.setChucVu("Đoàn viên");
             dv.setRole(Role.DOANVIEN);
@@ -591,6 +593,8 @@ public class AppController {
 
         userRepository.save(user);
         doanVienService.saveDoanVien(doanVien);
+
+        System.out.println(doanVien.getId() + " " + idDangNhap);
         
         if(dv.getId() == idDangNhap){
             return "redirect:/login";
