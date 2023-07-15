@@ -53,6 +53,7 @@ public class AppController {
     public int countSaiPass1 = 0;    
     public int countSaiPass2 = 0;
     public int errMaDoanVien = 0;
+    public int errTenChiDoan = 0;
     public int errEmail = 0;
     public Long idLop;
 
@@ -194,6 +195,13 @@ public class AppController {
      */
     @GetMapping("/admin/danh-sach-chi-doan/chinh-sua/{id}")
     public String updateChiDoanForm(@PathVariable Long id, Model model) {
+        if(count != 0){
+            System.out.println("Trùng tên chi đoàn");
+            model.addAttribute("errTenChiDoan", "Tên chi đoàn đã tồn tại");
+            count = 0;
+            
+        }
+
         model.addAttribute("chidoan", chiDoanService.getChiDoanById(id));
 
         return "ad-chinh-sua-chi-doan";
@@ -209,6 +217,11 @@ public class AppController {
         // for (DoanVien dv : doanViens) {
         //     dv.setTenChiDoan(chiDoan.getTenChiDoan());
         // }
+
+        if(!chiDoanService.ifChiDoanExisted(chiDoan.getTenChiDoan())){
+            count++;
+            return "redirect:/admin/danh-sach-chi-doan/chinh-sua/{id}";
+        }
 
         ChiDoan existingChiDoan = chiDoanService.getChiDoanById(id);
         existingChiDoan.setId(id);
