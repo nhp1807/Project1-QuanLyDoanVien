@@ -31,14 +31,10 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 
 import com.example.QuanLyDoanVien.service.CustomUserDetailsService;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 @Configuration
 @EnableWebSecurity
 // @Order(1)
-public class AdminSecurityConfig {
+public class RoleSecurityConfig {
     @Autowired
     UserDetailsService userDetailsService;
 
