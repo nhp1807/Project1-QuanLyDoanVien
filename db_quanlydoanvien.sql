@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2023 at 05:59 AM
+-- Generation Time: Jul 16, 2023 at 03:24 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -32,14 +32,6 @@ CREATE TABLE `chidoans` (
   `ten_chi_doan` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `chidoans`
---
-
-INSERT INTO `chidoans` (`id`, `ten_chi_doan`) VALUES
-(1, 'IT-LTU 01'),
-(2, 'IT-LTU 02');
-
 -- --------------------------------------------------------
 
 --
@@ -54,13 +46,6 @@ CREATE TABLE `danhgias` (
   `nguoi_danh_gia` varchar(255) DEFAULT NULL,
   `noi_dung` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `danhgias`
---
-
-INSERT INTO `danhgias` (`id`, `ho_ten`, `ma_doan_vien`, `nam_hoc`, `nguoi_danh_gia`, `noi_dung`) VALUES
-(1, 'Nguyễn Duy Thái', 'DV02', '2020', 'Nguyễn Hải Phong', 'OK');
 
 -- --------------------------------------------------------
 
@@ -87,15 +72,6 @@ CREATE TABLE `doanviens` (
   `ten_chi_doan` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `doanviens`
---
-
-INSERT INTO `doanviens` (`id`, `cccd`, `chuc_vu`, `dan_toc`, `email`, `ho_ten`, `id_chi_doan`, `ma_doan_vien`, `mat_khau`, `ngay_sinh`, `ngay_vao_doan`, `que_quan`, `re_mat_khau`, `role`, `sdt`, `ten_chi_doan`) VALUES
-(1, '001202007035', 'Lớp trưởng', 'Kinh', 'phong@sis.hust.edu.vn', 'Nguyễn Hải Phong', 2, 'DV01', '$2a$10$BHAKW4VOH6sHt9z5tw390OJKy/Mnj9VK47RhM7mLHH3uJFkxTF.A2', '2002-07-18', '2023-07-20', 'Hà Nội', '$2a$10$BHAKW4VOH6sHt9z5tw390OJKy/Mnj9VK47RhM7mLHH3uJFkxTF.A2', 'CANBO', '0982944425', 'IT-LTU 02'),
-(2, '001202019492', 'Uỷ viên', 'Kinh', 'thai@sis.hust.edu.vn', 'Nguyễn Duy Thái', 1, 'DV02', '$2a$10$mO6SIP8e4riQ/t9FA7EizuOqpRWqj/jlQfURZv3xYwvd2zoa63uSK', '2023-07-04', '2023-07-02', 'Hà Nội', '$2a$10$mO6SIP8e4riQ/t9FA7EizuOqpRWqj/jlQfURZv3xYwvd2zoa63uSK', 'CANBO', '0986455462', 'IT-LTU 01'),
-(3, '', 'Đoàn viên', '', 'hoang@sis.hust.edu.vn', 'Nguyễn Quang Huy Hoàng', 2, 'DV03', '$2a$10$rGJB7R3lh1pm1rIpPa9MxuL30nFMlRQbglkP8Kf6jRsESX0C13Gj.', '', '', '', '$2a$10$rGJB7R3lh1pm1rIpPa9MxuL30nFMlRQbglkP8Kf6jRsESX0C13Gj.', 'DOANVIEN', '', 'IT-LTU 02');
-
 -- --------------------------------------------------------
 
 --
@@ -116,10 +92,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `first_name`, `last_name`, `password`, `role`) VALUES
-(1, 'admin@sis.hust.edu.vn', 'admin', 'admin', '$2a$10$L6Y4QDDzda8MwcRSr3coAOTW1JvEN9na56Zmh0hLPnX5yU30HPHrC', 'ADMIN'),
-(2, 'phong@sis.hust.edu.vn', NULL, NULL, '$2a$10$BHAKW4VOH6sHt9z5tw390OJKy/Mnj9VK47RhM7mLHH3uJFkxTF.A2', 'CANBO'),
-(3, 'thai@sis.hust.edu.vn', NULL, NULL, '$2a$10$mO6SIP8e4riQ/t9FA7EizuOqpRWqj/jlQfURZv3xYwvd2zoa63uSK', 'CANBO'),
-(4, 'hoang@sis.hust.edu.vn', NULL, NULL, '$2a$10$rGJB7R3lh1pm1rIpPa9MxuL30nFMlRQbglkP8Kf6jRsESX0C13Gj.', 'DOANVIEN');
+(1, 'admin@sis.hust.edu.vn', 'admin', 'admin', '$2a$10$L6Y4QDDzda8MwcRSr3coAOTW1JvEN9na56Zmh0hLPnX5yU30HPHrC', 'ADMIN');
 
 --
 -- Indexes for dumped tables
@@ -162,7 +135,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `chidoans`
 --
 ALTER TABLE `chidoans`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `danhgias`
@@ -174,13 +147,13 @@ ALTER TABLE `danhgias`
 -- AUTO_INCREMENT for table `doanviens`
 --
 ALTER TABLE `doanviens`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
