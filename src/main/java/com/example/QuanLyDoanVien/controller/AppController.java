@@ -491,6 +491,7 @@ public class AppController {
             model.addAttribute("doanvien", doanVien);
             model.addAttribute("tenChiDoan", chiDoanService.getChiDoanById(doanVienService.getDoanVienById(idDangNhap).getIdChiDoan()).getTenChiDoan());
             model.addAttribute("listDoanViens", listDoanViensByName);
+            model.addAttribute("currentAccount", doanVienService.getDoanVienById(idDangNhap).getHoTen() + doanVienService.getDoanVienById(idDangNhap).getRole());
             // model.addAttribute("idDoanVien", id);
             idCanBo = idDangNhap;
         }else{
@@ -504,6 +505,7 @@ public class AppController {
             model.addAttribute("doanvien", doanVien);
             model.addAttribute("tenChiDoan", chiDoanService.getChiDoanById(doanVienService.getDoanVienById(idDangNhap).getIdChiDoan()).getTenChiDoan());
             model.addAttribute("listDoanViens", listDoanViens);
+            model.addAttribute("currentAccount", doanVienService.getDoanVienById(idDangNhap).getHoTen() + " - " + doanVienService.getDoanVienById(idDangNhap).getChucVu());
             // model.addAttribute("idDoanVien", id);
             idCanBo = idDangNhap;
         }
@@ -555,6 +557,7 @@ public class AppController {
             }
         }
 
+        User user = new User();
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(doanVien.getMatKhau());
         doanVien.setMatKhau(encodedPassword);
@@ -564,43 +567,85 @@ public class AppController {
 
         if (doanVien.getChucVu().equalsIgnoreCase("Đoàn viên")) {
             doanVien.setRole(Role.DOANVIEN);
+
+            // Tách họ tên và lưu vào User
+            String fullName = doanVien.getHoTen();
+            String[] nameSplited = fullName.split(" ");
+            String firstName = nameSplited[0];
+            String lastName = fullName.substring(firstName.length()+1).trim();
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            // Tạo tài khoản vào User
+            user.setEmail(doanVien.getEmail());
+            user.setPassword(doanVien.getMatKhau());
+            user.setRole(doanVien.getRole());
+
+            userRepository.save(user);
+            doanVienService.saveDoanVien(doanVien);
+
+            return "redirect:/can-bo/danh-sach-doan-vien";
         } else {
             doanVien.setRole(Role.CANBO);
+            // Tìm xem đoàn viên ứng với chức vụ đó đã tồn tại trong lớp chưa
+            DoanVien dv = doanVienRepository.getDoanVienByChucVu(doanVien.getChucVu(), idChiDoan);
+            if(dv != null){
+                dv.setChucVu("Đoàn viên");
+                dv.setRole(Role.DOANVIEN);
+                User newUser = userRepository.findByEmail(dv.getEmail());
+                newUser.setRole(Role.DOANVIEN);
+            }
+
+            // Tách họ tên và lưu vào User
+            String fullName = doanVien.getHoTen();
+            String[] nameSplited = fullName.split(" ");
+            String firstName = nameSplited[0];
+            String lastName = fullName.substring(firstName.length()+1).trim();
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            // Tạo tài khoản vào User
+            user.setEmail(doanVien.getEmail());
+            user.setPassword(doanVien.getMatKhau());
+            user.setRole(doanVien.getRole());
+
+            userRepository.save(user);
+            doanVienService.saveDoanVien(doanVien);
+            
+            if(dv.getId() == idDangNhap){
+                return "redirect:/login";
+            }
+
+            return "redirect:/can-bo/danh-sach-doan-vien";
         }
 
-        User user = new User();
+        // // Tìm xem đoàn viên ứng với chức vụ đó đã tồn tại trong lớp chưa
+        // DoanVien dv = doanVienRepository.getDoanVienByChucVu(doanVien.getChucVu(), idChiDoan);
+        // if(dv != null){
+        //     dv.setChucVu("Đoàn viên");
+        //     dv.setRole(Role.DOANVIEN);
+        //     User newUser = userRepository.findByEmail(dv.getEmail());
+        //     newUser.setRole(Role.DOANVIEN);
+        // }
 
-        // Tìm xem đoàn viên ứng với chức vụ đó đã tồn tại trong lớp chưa
-        DoanVien dv = doanVienRepository.getDoanVienByChucVu(doanVien.getChucVu(), idChiDoan);
-        if(dv != null){
-            dv.setChucVu("Đoàn viên");
-            dv.setRole(Role.DOANVIEN);
-            User newUser = userRepository.findByEmail(dv.getEmail());
-            newUser.setRole(Role.DOANVIEN);
-        }
+        // // Tách họ tên và lưu vào User
+        // String fullName = doanVien.getHoTen();
+        // String[] nameSplited = fullName.split(" ");
+        // String firstName = nameSplited[0];
+        // String lastName = fullName.substring(firstName.length()+1).trim();
+        // user.setFirstName(firstName);
+        // user.setLastName(lastName);
+        // // Tạo tài khoản vào User
+        // user.setEmail(doanVien.getEmail());
+        // user.setPassword(doanVien.getMatKhau());
+        // user.setRole(doanVien.getRole());
 
-        // Tách họ tên và lưu vào User
-        String fullName = doanVien.getHoTen();
-        String[] nameSplited = fullName.split(" ");
-        String firstName = nameSplited[0];
-        String lastName = fullName.substring(firstName.length()+1).trim();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        // Tạo tài khoản vào User
-        user.setEmail(doanVien.getEmail());
-        user.setPassword(doanVien.getMatKhau());
-        user.setRole(doanVien.getRole());
-
-        userRepository.save(user);
-        doanVienService.saveDoanVien(doanVien);
-
-        System.out.println(doanVien.getId() + " " + idDangNhap);
+        // userRepository.save(user);
+        // doanVienService.saveDoanVien(doanVien);
         
-        if(dv.getId() == idDangNhap){
-            return "redirect:/login";
-        }
+        // // if(dv.getId() == idDangNhap){
+        // //     return "redirect:/login";
+        // // }
 
-        return "redirect:/can-bo/danh-sach-doan-vien";
+        // return "redirect:/can-bo/danh-sach-doan-vien";
     }
 
     /*
@@ -668,6 +713,7 @@ public class AppController {
             }
             model.addAttribute("tenChiDoan", doanVien.getTenChiDoan());
             model.addAttribute("listDoanViens", listDoanViensByName);
+            model.addAttribute("currentAccount", doanVienService.getDoanVienById(idDangNhap).getHoTen() + " - " + doanVienService.getDoanVienById(idDangNhap).getChucVu());
         }else{
             String email = principal.getName();
             idDangNhap = doanVienRepository.findByEmail(email).getId();
@@ -676,6 +722,7 @@ public class AppController {
             List<DoanVien> listDoanViens = doanVienRepository.getListDoanVien(doanVien.getIdChiDoan());
             model.addAttribute("tenChiDoan", doanVien.getTenChiDoan());
             model.addAttribute("listDoanViens", listDoanViens);
+            model.addAttribute("currentAccount", doanVienService.getDoanVienById(idDangNhap).getHoTen() + " - " + doanVienService.getDoanVienById(idDangNhap).getChucVu());
         }
 
         return "dv-danh-sach-doan-vien";
