@@ -427,8 +427,11 @@ public class AppController {
         }
         
         userRepository.save(user);
-
         doanVienService.updateDoanVien(existingDoanVien);
+
+        if(dv.getId() == idDangNhap){
+            return "redirect:/login";
+        }
         return "redirect:/can-bo/danh-sach-doan-vien";
     }
 
