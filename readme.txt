@@ -7,11 +7,14 @@
 2. Cách cài đặt chương trình
 - Sau khi cài đặt XAMPP, tiến hành cài đặt cơ sở dữ liệu
 - Khởi động XAMPP và chọn 'Start' của 2 Module 'Apache' và 'MySQL'
-- Sử dụng file cơ sở dữ liệu được cấp trước (database_quanlydoanvien) hoặc tự thêm cơ sở dữ liệu (Yêu cầu đúng tên cơ sở dữ liệu)
+- Sử dụng file cơ sở dữ liệu được cấp trước (db_quanlydoanvien) hoặc tự thêm cơ sở dữ liệu (Yêu cầu đúng tên cơ sở dữ liệu)
 - Sau khi thêm thành công cơ sở dữ liệu, tiến hành sử dụng chương trình
 - Mở project và chạy file 'RunApplication.java' theo đường dẫn '\src\main\java\com\example\QuanLyDoanVien'
-- Mở trình duyệt web và gõ đường dẫn vào thanh tìm kiếm 'localhost:8080'
+- Mở trình duyệt web và gõ đường dẫn vào thanh tìm kiếm 'localhost:8080/login'
 - Màn hình đăng nhập hiện lên và sử dụng các tài khoản được cấp trong cơ sở dữ liệu
+- Tài khoản Admin:
+    Email: admin@sis.hust.edu.vn
+    Password: admin123
 
 3. Công nghệ sử dụng
 - Hệ CSDL MySQL
