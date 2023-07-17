@@ -630,6 +630,15 @@ public class AppController {
                 dv.setRole(Role.DOANVIEN);
                 User newUser = userRepository.findByEmail(dv.getEmail());
                 newUser.setRole(Role.DOANVIEN);
+
+                userRepository.save(user);
+                doanVienService.saveDoanVien(doanVien);
+
+                if(dv.getId() == idDangNhap){
+                    return "redirect:/login";
+                }
+
+                return "redirect:/can-bo/danh-sach-doan-vien";
             }
 
             // Tách họ tên và lưu vào User
@@ -647,9 +656,9 @@ public class AppController {
             userRepository.save(user);
             doanVienService.saveDoanVien(doanVien);
             
-            if(dv.getId() == idDangNhap){
-                return "redirect:/login";
-            }
+            // if(dv.getId() == idDangNhap){
+            //     return "redirect:/login";
+            // }
 
             return "redirect:/can-bo/danh-sach-doan-vien";
         }
