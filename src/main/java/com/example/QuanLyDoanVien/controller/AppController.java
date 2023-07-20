@@ -414,6 +414,9 @@ public class AppController {
             user.setRole(Role.DOANVIEN);
             userRepository.save(user);
             doanVienService.updateDoanVien(existingDoanVien);
+            if(id == idDangNhap){
+                return "redirect:/login";
+            }
             return "redirect:/can-bo/danh-sach-doan-vien";
         } else {
             existingDoanVien.setRole(Role.CANBO);
@@ -422,6 +425,9 @@ public class AppController {
             if(id == idDangNhap){
                 existingDoanVien.setEmail(doanVienService.getDoanVienById(idDangNhap).getEmail());
                 doanVienService.updateDoanVien(existingDoanVien);
+                // if(existingDoanVien.getChucVu().equals("Đoàn viên")){
+                //     return "redirect:/login";
+                // }
                 return "redirect:/can-bo/danh-sach-doan-vien";
             }
 
@@ -630,6 +636,18 @@ public class AppController {
                 dv.setRole(Role.DOANVIEN);
                 User newUser = userRepository.findByEmail(dv.getEmail());
                 newUser.setRole(Role.DOANVIEN);
+
+                // Tách họ tên và lưu vào User
+                String fullName = doanVien.getHoTen();
+                String[] nameSplited = fullName.split(" ");
+                String firstName = nameSplited[0];
+                String lastName = fullName.substring(firstName.length()+1).trim();
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                // Tạo tài khoản vào User
+                user.setEmail(doanVien.getEmail());
+                user.setPassword(doanVien.getMatKhau());
+                user.setRole(doanVien.getRole());
 
                 userRepository.save(user);
                 doanVienService.saveDoanVien(doanVien);
